@@ -1,0 +1,27 @@
+name: Run Colab Script
+
+on:
+  schedule:
+    - cron: '0 13 * * *'  # เวลา 20:00 น. (GMT+7)
+  workflow_dispatch:    # เผื่ออยากกด Run เองด้วย
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'  # หรือจะ 3.11 ก็ได้ตามใจ
+      
+      - name: Install dependencies
+        run: |
+          pip install gspread requests
+
+      - name: Run script
+        run: |
+          python run.py
